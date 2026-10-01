@@ -27,6 +27,21 @@ def top_words(text: str, n: int = 3) -> list[tuple[str, int]]:
     return Counter(words).most_common(n)
 
 
+def export_word_counts_csv(text: str) -> str:
+    """Return CSV text of word counts with header 'word,count'.
+
+    Words are case-insensitive and parsed with the same word parsing
+    logic used elsewhere in this module. Rows are sorted by descending
+    count, then alphabetically for ties.
+    """
+    words = [w.lower() for w in _WORD_RE.findall(text)]
+    counts = Counter(words)
+    rows = sorted(counts.items(), key=lambda item: (-item[1], item[0]))
+    lines = ["word,count"]
+    lines.extend(f"{word},{count}" for word, count in rows)
+    return "\n".join(lines)
+
+
 def is_palindrome(text: str) -> bool:
     """Return True if text is a palindrome (letters only, case-insensitive)."""
     letters = [c.lower() for c in text if c.isalpha()]
