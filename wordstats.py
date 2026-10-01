@@ -11,6 +11,11 @@ def word_count(text: str) -> int:
     return len(_WORD_RE.findall(text))
 
 
+def unique_word_count(text: str) -> int:
+    """Count the number of distinct words in text (case-insensitive)."""
+    return len({w.lower() for w in _WORD_RE.findall(text)})
+
+
 def char_count(text: str) -> int:
     """Count all characters, including whitespace and punctuation."""
     return len(text)

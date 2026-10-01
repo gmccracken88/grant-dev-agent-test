@@ -1,6 +1,6 @@
 """Tests for the wordstats application."""
 
-from wordstats import char_count, is_palindrome, top_words, word_count
+from wordstats import char_count, is_palindrome, top_words, unique_word_count, word_count
 
 
 class TestWordCount:
@@ -15,6 +15,23 @@ class TestWordCount:
 
     def test_multiple_spaces(self):
         assert word_count("a  b   c") == 3
+
+
+class TestUniqueWordCount:
+    def test_simple_sentence(self):
+        assert unique_word_count("hello world hello") == 2
+
+    def test_case_insensitive(self):
+        assert unique_word_count("The the THE") == 1
+
+    def test_punctuation_attached(self):
+        assert unique_word_count("hello, world! hello") == 2
+
+    def test_empty_string(self):
+        assert unique_word_count("") == 0
+
+    def test_all_unique(self):
+        assert unique_word_count("a b c") == 3
 
 
 class TestCharCount:
